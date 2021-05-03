@@ -1,0 +1,21 @@
+.App {
+  text-align: center;
+}
+
+.Form{
+  margin-top: 35px;
+}
+
+.Form_Camp{
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.Error{
+  font-weight: bold;
+  color: red;
+}
+
+.Button{
+  margin-top: 10px;
+}
