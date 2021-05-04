@@ -1,4 +1,5 @@
 import React from 'react';
+//import UserData from './UserData';
 import './App.css';
 
 const initialState = {
@@ -41,11 +42,6 @@ class FormBeta extends React.Component {
       emailError = "E-mail empty";
     }
 
-    /*if (!this.state.email.includes("@")) {
-      emailError = "Invalid e-mail";
-    }*/
-    //risolto con type="email"
-
     if (!this.state.password) {
       passwordError = "Password empty";
     }
@@ -63,7 +59,12 @@ class FormBeta extends React.Component {
     const isValid = this.validate();
     if (isValid) {
       console.log(this.state);
-      this.setState(initialState);
+      this.props.UserData.firstName=this.state.firstName;
+      this.props.UserData.lastName=this.state.lastName;
+      this.props.UserData.email=this.state.email;
+      this.props.UserData.password=this.state.password;
+
+    this.setState(initialState);
     }
   };
 
@@ -124,8 +125,22 @@ class FormBeta extends React.Component {
             {this.state.passwordError}
           </div>
         </div>
+
+
         <button className="Button" type="submit">Enter</button>
+
+        <div /*className={"Hidden"}*/>
+          <p>First Name: {this.props.UserData.firstName}</p>
+          <p>Last Name: {this.props.UserData.lastName}</p>
+          <p>Email: {this.props.UserData.email}</p>
+          <p>Password: {this.props.UserData.password}</p>
+        </div>
+
       </form>
+
+
+
+
     );
   }
 }
