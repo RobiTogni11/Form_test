@@ -1,5 +1,4 @@
 import React from 'react';
-//import UserData from './UserData';
 import './App.css';
 
 const initialState = {
@@ -11,13 +10,16 @@ const initialState = {
   firstNameError: "",
   lastNameError: "",
   emailError: "",
-  passwordError: ""
+  passwordError: "",
+
+  submit_list:[]
 };
 
-class FormBeta extends React.Component {
+export default class FormBeta extends React.Component {
   state = initialState;
 
   handleChange = (event) => {
+
     this.setState({
       [event.target.name]:(event.target.value)
     });
@@ -26,50 +28,58 @@ class FormBeta extends React.Component {
 
   validate = () => {
     let firstNameError = "";
-    let lastNameError: "";
+    let lastNameError = "";
     let emailError = "";
     let passwordError = "";
 
-    if (!this.state.firstName) {
-      firstNameError = "First name empty";
-    }
+      if (!this.state.firstName) {
+        firstNameError = "First name empty";
+      }
 
-    if (!this.state.lastName) {
-      lastNameError = "Last name empty";
-    }
+      if (!this.state.lastName) {
+        lastNameError = "Last name empty";
+      }
 
-    if (!this.state.email) {
-      emailError = "E-mail empty";
-    }
+      if (!this.state.email) {
+        emailError = "E-mail empty";
+      }
 
-    if (!this.state.password) {
-      passwordError = "Password empty";
-    }
+      if (!this.state.password) {
+        passwordError = "Password empty";
+      }
 
-    if (firstNameError || lastNameError ||emailError || passwordError) {
-      this.setState({ firstNameError, lastNameError, emailError, passwordError });
-      return false;
-    }
+      if (firstNameError || lastNameError ||emailError || passwordError) {
+        this.setState({ firstNameError, lastNameError, emailError, passwordError });
+        return false;
+      }
 
-    return true;
+      return true;
   };
+
 
   handleSubmit = (event) => {
     event.preventDefault();
     const isValid = this.validate();
-    if (isValid) {
-      console.log(this.state);
-      this.props.UserData.firstName=this.state.firstName;
-      this.props.UserData.lastName=this.state.lastName;
-      this.props.UserData.email=this.state.email;
-      this.props.UserData.password=this.state.password;
 
-    this.setState(initialState);
+    if (isValid) {
+
+      console.log(this.state);
+
+      this.setState({
+        submit_list : this.state.submit_list.concat(
+          {firstName : this.state.firstName, lastName : this.state.lastName,
+          email : this.state.email, password : this.state.password})
+      });
+
+      this.setState(initialState);
+             
     }
   };
 
   render() {
     return (
+
+    <React.Fragment> 
       <form className="Form" onSubmit={this.handleSubmit}>
 
         <div className="Form_Camp">
@@ -126,23 +136,25 @@ class FormBeta extends React.Component {
           </div>
         </div>
 
-
-        <button className="Button" type="submit">Enter</button>
-
-        <div /*className={"Hidden"}*/>
-          <p>First Name: {this.props.UserData.firstName}</p>
-          <p>Last Name: {this.props.UserData.lastName}</p>
-          <p>Email: {this.props.UserData.email}</p>
-          <p>Password: {this.props.UserData.password}</p>
-        </div>
-
+        <button className="Button" onClick={this.handleSubmit}>Enter</button>
+   
       </form>
 
+      <div >
+        <ul> {this.state.submit_list.map((value,index)=>
+            <li key={index}>
+              <p><b>First Name:</b> {value.firstName}</p>
+              <p><b>Last Name:</b> {value.lastName}</p>
+              <p><b>Email:</b> {value.email}</p>
+              <p><b>Password:</b> {value.password}</p>
+            </li>)}
+        </ul>
+      </div>
 
-
+    </React.Fragment>
 
     );
   }
 }
 
-export default FormBeta;
+

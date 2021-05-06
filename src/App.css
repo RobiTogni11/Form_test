@@ -19,3 +19,15 @@
 .Button{
   margin-top: 10px;
 }
+
+
+ul{
+  list-style-type: none;
+}
+
+li{
+
+  border-style: solid;
+  margin-top: 10px;
+  text-align: left;
+}
